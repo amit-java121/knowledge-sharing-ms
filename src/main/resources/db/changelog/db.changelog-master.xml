@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
+
+    <include relativeToChangelogFile='true' file='changes/20220613224207-create-table-knowledge-sharing.xml'/>
+    <include relativeToChangelogFile='true' file='changes/20220613233149-populate-table-knowledge-sharing.xml'/>
+</databaseChangeLog>

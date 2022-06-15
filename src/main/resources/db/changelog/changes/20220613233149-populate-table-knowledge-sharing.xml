@@ -1,0 +1,18 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <changeSet author="chandra" id="20220613233149-populate-table-knowledge-sharing">
+        <loadData
+                tableName="knowledge_sharing" relativeToChangelogFile="true" file="data/knowledge-sharing-details.csv">
+<!--            <column header="id" name="id" type="NUMERIC"/>-->
+            <column header="title" name="title" type="STRING"/>
+            <column header="author" name="author" type="STRING"/>
+            <column header="date" name="date" type="STRING"/>
+            <column header="likes" name="likes" type="NUMERIC"/>
+            <column header="views" name="views" type="NUMERIC"/>
+            <column header="link" name="link" type="STRING"/>
+        </loadData>
+    </changeSet>
+</databaseChangeLog>
