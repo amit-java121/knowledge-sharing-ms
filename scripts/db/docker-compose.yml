@@ -1,0 +1,17 @@
+version: '3.1'
+
+services:
+  postgres:
+    image: postgres:11.6
+    container_name: io-knowledge-sharing-db
+    restart: always
+    environment:
+      POSTGRES_USER: dbkwnsha
+      POSTGRES_PASSWORD: dbkwnsha
+      POSTGRES_DB: db-knowledge-sharing
+    ports:
+      - 9001:5432
+    volumes:
+      - pg-data-knwsha:/var/lib/postgresql/data
+volumes:
+  pg-data-knwsha:
