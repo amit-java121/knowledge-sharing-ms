@@ -1,8 +1,5 @@
 package com.knowledgesharing.ms.exception;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
@@ -53,14 +50,6 @@ public class ApplicationControllerAdvice extends ResponseEntityExceptionHandler 
 
     private String formatError(List<ObjectError> allErrors) {
         return allErrors.stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.joining(","));
-    }
-
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    class ErrorResponse {
-        private String code;
-        private String description;
     }
 
 }
