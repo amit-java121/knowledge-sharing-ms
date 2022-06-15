@@ -1,35 +1,34 @@
 package com.knowledgesharing.ms.integration.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.tomakehurst.wiremock.WireMockServer;
 import com.knowledgesharing.ms.Application;
-import com.knowledgesharing.ms.controller.KnowledgeSharingController;
 import com.knowledgesharing.ms.datatransfer.KnowledgeSharingDto;
-import com.knowledgesharing.ms.datatransfer.KnowledgeSharingModelView;
 import com.knowledgesharing.ms.service.KnowledgeSharingService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.List;
-
-import static org.apache.http.HttpStatus.*;
+import static com.github.tomakehurst.wiremock.client.WireMock.configureFor;
+import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
+import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ContextConfiguration(classes = {Application.class})
-@WebMvcTest(KnowledgeSharingController.class)
+@SpringBootTest(classes = {Application.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureMockMvc
 public class KnowSharingControllerApiTest {
+
+    @LocalServerPort
+    private int randomServerPort;
+
+    private WireMockServer wireMockServer;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -37,12 +36,28 @@ public class KnowSharingControllerApiTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
-    private KnowledgeSharingService knowledgeSharingService;
+    private RequestSpecification request;
+    private Response response;
 
     @BeforeEach
     void beforeEach() {
-        reset(knowledgeSharingService);
+        startWireMockServer();
+    }
+
+    @AfterEach
+    void tearDown() {
+        stopWireMockServer();
+    }
+
+    private void stopWireMockServer() {
+        wireMockServer.stop();
+    }
+
+    private void startWireMockServer() {
+        wireMockServer = new WireMockServer(
+                wireMockConfig().port(8888));
+        wireMockServer.start();
+        configureFor("localhost", wireMockServer.port());
     }
 
     @Nested
@@ -50,32 +65,15 @@ public class KnowSharingControllerApiTest {
     class FetchDetails {
         @Test
         void shouldFetchDetailsAPI() throws Exception {
-            String author = "some-author";
-            String title = "some-title";
-            Long views = 100L;
-            Long likes = 100L;
-
-            KnowledgeSharingDto knowledgeSharingDto = KnowledgeSharingDto
-                    .builder()
-                    .title("some-title")
-                    .author("some-author")
-                    .views(100L)
-                    .likes(100L)
-                    .link("some-link")
-                    .build();
-
-            KnowledgeSharingModelView expected = KnowledgeSharingModelView.builder()
-                    .knowledgeSharingDtoList(List.of(knowledgeSharingDto)).build();
-
-            String jsonResponse = objectMapper.writeValueAsString(expected);
-            when(knowledgeSharingService.fetchDetails(author, title, views, likes)).thenReturn(expected);
-            mockMvc.perform(get("/knowledge-sharing")
-                            .queryParam("author", author)
-                            .queryParam("title", title)
-                            .queryParam("likes", "100")
-                            .queryParam("views", "100"))
-                    .andExpect(status().isOk())
-                    .andExpect(content().json(jsonResponse));
+            String author = "Climate action needs new frontline leadership";
+            String title = "Ozawa Bineshi Albert";
+            String url = "http://localhost:" + randomServerPort + "/knowledge-sharing";
+            url += "?author=" + author;
+            url += "&title=" + title;
+            url += "&likes=12000";
+            url += "&views=404000";
+            response = given().when().get(url);
+            response.then().statusCode(200);
         }
     }
 
@@ -84,23 +82,21 @@ public class KnowSharingControllerApiTest {
     class InsertDetails {
         @Test
         void shouldInsertRecords() throws Exception {
+            String url = "http://localhost:" + randomServerPort + "/knowledge-sharing";
             KnowledgeSharingDto knowledgeSharingDto = KnowledgeSharingDto
                     .builder()
                     .title("some-title")
                     .author("some-author")
                     .views(100L)
                     .likes(100L)
+                    .date("some-date")
                     .link("some-link")
                     .build();
 
             String requestBody = objectMapper.writeValueAsString(knowledgeSharingDto);
-
-            when(knowledgeSharingService.insertDetails(knowledgeSharingDto)).thenReturn(2L);
-
-            mockMvc.perform(MockMvcRequestBuilders.post("/knowledge-sharing")
-                            .contentType(MediaType.APPLICATION_JSON_VALUE)
-                            .content(requestBody))
-                    .andExpect(status().is(SC_CREATED));
+            request = given().contentType(ContentType.JSON);
+            response = request.when().body(requestBody).post(url);
+            response.then().statusCode(201);
 
         }
     }
@@ -110,6 +106,7 @@ public class KnowSharingControllerApiTest {
     class modifyDetails {
         @Test
         void shouldModifyRecords() throws Exception {
+            String url = "http://localhost:" + randomServerPort + "/knowledge-sharing/2";
             KnowledgeSharingDto knowledgeSharingDto = KnowledgeSharingDto
                     .builder()
                     .title("some-title")
@@ -120,12 +117,9 @@ public class KnowSharingControllerApiTest {
                     .build();
 
             String requestBody = objectMapper.writeValueAsString(knowledgeSharingDto);
-
-            when(knowledgeSharingService.modifyDetails(1L, knowledgeSharingDto)).thenReturn(1L);
-            mockMvc.perform(MockMvcRequestBuilders.put("/knowledge-sharing/1")
-                            .contentType(MediaType.APPLICATION_JSON_VALUE)
-                            .content(requestBody))
-                    .andExpect(status().is(SC_OK));
+            request = given().contentType(ContentType.JSON);
+            response = request.when().body(requestBody).put(url);
+            response.then().statusCode(200);
 
         }
     }
@@ -135,10 +129,9 @@ public class KnowSharingControllerApiTest {
     class deleteDetails {
         @Test
         void shouldModifyRecords() throws Exception {
-            doNothing().when(knowledgeSharingService).deleteDetails(1L);
-            mockMvc.perform(MockMvcRequestBuilders.delete("/knowledge-sharing/1")
-                            .contentType(MediaType.APPLICATION_JSON_VALUE))
-                    .andExpect(status().is(SC_NO_CONTENT));
+            String url = "http://localhost:" + randomServerPort + "/knowledge-sharing/3";
+            response = given().when().delete(url);
+            response.then().statusCode(204);
         }
     }
 
