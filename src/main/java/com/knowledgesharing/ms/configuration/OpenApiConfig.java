@@ -2,33 +2,19 @@ package com.knowledgesharing.ms.configuration;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.security.SecurityRequirement;
-import io.swagger.v3.oas.models.security.SecurityScheme;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import io.swagger.v3.oas.models.info.Info;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
-@Configuration
-@ConfigurationProperties()
-public class OpenApiConfig {
-
-    public static final String BEARER_AUTH = "bearerAuth";
+@Component
+public class OpenApiConfig  {
 
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
-            .components(
-                new Components()
-                    .addSecuritySchemes(BEARER_AUTH,
-                        new SecurityScheme()
-                            .name(BEARER_AUTH)
-                            .type(SecurityScheme.Type.HTTP)
-                            .scheme("bearer")
-                            .bearerFormat("JWT")
-                            .in(SecurityScheme.In.HEADER).name("Authorization")
-                    )
-            )
-            .addSecurityItem(new SecurityRequirement().addList(BEARER_AUTH));
+                .components(new Components())
+                .info(new Info().title("Knowledge Sharing API").description(
+                        "This project basically interacts with the database to get the details of the links of TED talks, Modify the details,\n" +
+                                "Insert new details, Delete the existing ones (CRUD operations)"));
     }
-
 }
