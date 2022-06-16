@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 @Component
-public class OpenApiConfig  {
+public class OpenApiConfig {
 
     @Bean
     public OpenAPI customOpenAPI() {

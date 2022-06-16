@@ -23,49 +23,49 @@ import java.util.Map;
 @Component
 public class SpringConfigInfo implements InfoContributor {
 
-	@Value("${info.build.artifactId}")
-	private String artifactId;
+    @Value("${info.build.artifactId}")
+    private String artifactId;
 
-	@Value("${info.build.groupId}")
-	private String groupId;
+    @Value("${info.build.groupId}")
+    private String groupId;
 
-	@Value("${spring.application.name}")
-	private String applicationName;
+    @Value("${spring.application.name}")
+    private String applicationName;
 
-	@Value("${spring.application.description}")
-	private String applicationDescription;
+    @Value("${spring.application.description}")
+    private String applicationDescription;
 
-	@Autowired
-	private ApplicationContext ctx;
+    @Autowired
+    private ApplicationContext ctx;
 
-	@Override
-	public void contribute(Info.Builder builder) {
-		// Setting context
-		Map<String, Object> contextDetails = new HashMap<>();
-		contextDetails.put("bean-definition-count", ctx.getBeanDefinitionCount());
-		contextDetails.put("startup-date", ctx.getStartupDate());
-		builder.withDetail("context", contextDetails);
+    @Override
+    public void contribute(Info.Builder builder) {
+        // Setting context
+        Map<String, Object> contextDetails = new HashMap<>();
+        contextDetails.put("bean-definition-count", ctx.getBeanDefinitionCount());
+        contextDetails.put("startup-date", ctx.getStartupDate());
+        builder.withDetail("context", contextDetails);
 
-		// Settings app
-		Map<String, String> appDetails = new HashMap<>();
-		appDetails.put("name", applicationName);
-		appDetails.put("description", applicationDescription);
-		builder.withDetail("app", appDetails);
+        // Settings app
+        Map<String, String> appDetails = new HashMap<>();
+        appDetails.put("name", applicationName);
+        appDetails.put("description", applicationDescription);
+        builder.withDetail("app", appDetails);
 
-		// Settings GAV
-		String version = getClass().getPackage().getImplementationVersion();
+        // Settings GAV
+        String version = getClass().getPackage().getImplementationVersion();
 
-		Map<String, String> buildDetails = new HashMap<>();
-		buildDetails.put("groupId", groupId);
-		buildDetails.put("artifactId", artifactId);
-		buildDetails.put("version", version);
-		builder.withDetail("build", buildDetails);
+        Map<String, String> buildDetails = new HashMap<>();
+        buildDetails.put("groupId", groupId);
+        buildDetails.put("artifactId", artifactId);
+        buildDetails.put("version", version);
+        builder.withDetail("build", buildDetails);
 
-		// Settings Spring profiles
-		Map<String, String[]> springProfiles = new HashMap<>();
-		springProfiles.put("Default Profile", ctx.getEnvironment().getDefaultProfiles());
-		springProfiles.put("Active Profile", ctx.getEnvironment().getActiveProfiles());
-		builder.withDetail("Spring Profiles", springProfiles);
-	}
+        // Settings Spring profiles
+        Map<String, String[]> springProfiles = new HashMap<>();
+        springProfiles.put("Default Profile", ctx.getEnvironment().getDefaultProfiles());
+        springProfiles.put("Active Profile", ctx.getEnvironment().getActiveProfiles());
+        builder.withDetail("Spring Profiles", springProfiles);
+    }
 
 }

@@ -13,8 +13,8 @@ public class HealthMetricConfig {
     @Bean
     public Gauge healthGauge(MeterRegistry meterRegistry, HealthEndpoint healthEndpoint) {
         return Gauge.builder("health", healthEndpoint, this::healthToInteger)
-            .strongReference(true) // so that gauge is not garbage collected
-            .register(meterRegistry);
+                .strongReference(true) // so that gauge is not garbage collected
+                .register(meterRegistry);
     }
 
     private int healthToInteger(HealthEndpoint healthEndpoint) {

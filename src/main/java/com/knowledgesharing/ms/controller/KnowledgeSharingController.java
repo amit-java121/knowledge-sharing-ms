@@ -33,14 +33,14 @@ public class KnowledgeSharingController {
                     content = @Content(array = @ArraySchema(schema = @Schema(implementation = KnowledgeSharingDto.class)))),
             @ApiResponse(responseCode = "400", description = "Bad Request (when the values of the input not in the correct way)",
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class)))})
-    @GetMapping(value = "", produces = { "application/json", "application/xml" })
+    @GetMapping(value = "", produces = {"application/json", "application/xml"})
     public KnowledgeSharingModelView fetchDetails(@RequestParam(required = false) String author, @RequestParam(required = false) String title, @RequestParam(required = false) Long likes, @RequestParam(required = false) Long views) {
         return knowledgeSharingService.fetchDetails(author, title, likes, views);
     }
 
     @Operation(description = "Insert new details into the knowledge sharing DB", operationId = "insertDetails")
     @ApiResponse(responseCode = "200", description = "Successful Operation")
-    @PostMapping(value = "", produces = { "application/json", "application/xml" })
+    @PostMapping(value = "", produces = {"application/json", "application/xml"})
     public ResponseEntity<Long> insertDetails(@Valid @RequestBody KnowledgeSharingDto knowledgeSharingDto) {
         Long id = knowledgeSharingService.insertDetails(knowledgeSharingDto);
         return ResponseEntity.created(URI.create("/knowledge-sharing/" + id)).body(id);
@@ -52,7 +52,7 @@ public class KnowledgeSharingController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "successful operation"),
             @ApiResponse(responseCode = "404", description = "ID not found", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))})
-    @PutMapping(value = "/{id}", produces = { "application/json", "application/xml" })
+    @PutMapping(value = "/{id}", produces = {"application/json", "application/xml"})
     public ResponseEntity<Long> modifyDetails(@PathVariable("id") Long id, @RequestBody KnowledgeSharingDto knowledgeSharingDto) {
         Long responseId = knowledgeSharingService.modifyDetails(id, knowledgeSharingDto);
         return ResponseEntity.ok(responseId);
@@ -60,7 +60,7 @@ public class KnowledgeSharingController {
 
     @Operation(description = "Delete existing details from the knowledge sharing DB", operationId = "deleteDetails")
     @ApiResponse(responseCode = "200", description = "Successful Operation")
-    @DeleteMapping(value = "/{id}", produces = { "application/json", "application/xml" })
+    @DeleteMapping(value = "/{id}", produces = {"application/json", "application/xml"})
     public ResponseEntity<Void> deleteDetails(@PathVariable("id") Long id) {
         knowledgeSharingService.deleteDetails(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

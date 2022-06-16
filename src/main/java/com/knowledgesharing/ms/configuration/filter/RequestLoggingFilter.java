@@ -16,6 +16,10 @@ public class RequestLoggingFilter implements Filter {
     public RequestLoggingFilter() {
     }
 
+    public static void setLogger(Logger passedLogger) {
+        log = passedLogger;
+    }
+
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         try {
             this.logStartRequest((HttpServletRequest) request);
@@ -24,10 +28,6 @@ public class RequestLoggingFilter implements Filter {
             this.logRequestAndResponse((HttpServletRequest) request, (HttpServletResponse) response);
         }
 
-    }
-
-    public static void setLogger(Logger passedLogger) {
-        log = passedLogger;
     }
 
     public void init(FilterConfig filterConfig) throws ServletException {
