@@ -20,9 +20,9 @@ import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/knowledge-sharing")
+@RequestMapping("/v1/knowledge-sharing")
 @AllArgsConstructor
-@Tag(name = "Knowledge-Sharing-Controller", description = "Controller that basically does the CRUD operations related to the Knowledge sharing platform!")
+@Tag(name = "Knowledge-Sharing-Controller", description = "(Version 1) Controller that basically does the CRUD operations related to the Knowledge sharing platform!")
 public class KnowledgeSharingController {
 
     private final KnowledgeSharingService knowledgeSharingService;

@@ -16,6 +16,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDate;
+
 import static com.github.tomakehurst.wiremock.client.WireMock.configureFor;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static io.restassured.RestAssured.given;
@@ -67,7 +69,7 @@ public class KnowSharingControllerApiTest {
         void shouldFetchDetailsAPI() throws Exception {
             String author = "Climate action needs new frontline leadership";
             String title = "Ozawa Bineshi Albert";
-            String url = "http://localhost:" + randomServerPort + "/knowledge-sharing";
+            String url = "http://localhost:" + randomServerPort + "/v1/knowledge-sharing";
             url += "?author=" + author;
             url += "&title=" + title;
             url += "&likes=12000";
@@ -82,14 +84,14 @@ public class KnowSharingControllerApiTest {
     class InsertDetails {
         @Test
         void shouldInsertRecords() throws Exception {
-            String url = "http://localhost:" + randomServerPort + "/knowledge-sharing";
+            String url = "http://localhost:" + randomServerPort + "/v1/knowledge-sharing";
             KnowledgeSharingDto knowledgeSharingDto = KnowledgeSharingDto
                     .builder()
                     .title("some-title")
                     .author("some-author")
                     .views(100L)
                     .likes(100L)
-                    .date("some-date")
+                    .date(LocalDate.now())
                     .link("some-link")
                     .build();
 
@@ -106,7 +108,7 @@ public class KnowSharingControllerApiTest {
     class modifyDetails {
         @Test
         void shouldModifyRecords() throws Exception {
-            String url = "http://localhost:" + randomServerPort + "/knowledge-sharing/2";
+            String url = "http://localhost:" + randomServerPort + "/v1/knowledge-sharing/2";
             KnowledgeSharingDto knowledgeSharingDto = KnowledgeSharingDto
                     .builder()
                     .title("some-title")
@@ -129,7 +131,7 @@ public class KnowSharingControllerApiTest {
     class deleteDetails {
         @Test
         void shouldModifyRecords() throws Exception {
-            String url = "http://localhost:" + randomServerPort + "/knowledge-sharing/3";
+            String url = "http://localhost:" + randomServerPort + "/v1/knowledge-sharing/3";
             response = given().when().delete(url);
             response.then().statusCode(204);
         }

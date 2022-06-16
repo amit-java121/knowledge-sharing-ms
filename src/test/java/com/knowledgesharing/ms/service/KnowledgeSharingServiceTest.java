@@ -18,6 +18,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -159,7 +160,7 @@ class KnowledgeSharingServiceTest {
                     .views(100L)
                     .likes(100L)
                     .link("some-link")
-                    .date("some-date")
+                    .date(LocalDate.now())
                     .build();
 
             when(knowledgeSharingRepository.findById(id)).thenReturn(knowledgeSharing);

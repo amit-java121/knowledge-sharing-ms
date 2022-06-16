@@ -6,6 +6,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class TestData implements ApplicationContextAware {
@@ -33,7 +34,7 @@ public class TestData implements ApplicationContextAware {
                 .views(100L)
                 .likes(100L)
                 .link("some-link")
-                .date("some-date")
+                .date(LocalDate.now())
                 .createdAt(LocalDateTime.now())
                 .createdBy("some-user")
                 .updatedAt(LocalDateTime.now())

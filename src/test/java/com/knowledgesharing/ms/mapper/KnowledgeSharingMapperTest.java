@@ -4,6 +4,7 @@ import com.knowledgesharing.ms.datatransfer.KnowledgeSharingDto;
 import com.knowledgesharing.ms.entities.KnowledgeSharing;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class KnowledgeSharingMapperTest {
                 .title("some-title")
                 .author("some-author")
                 .views(100L)
-                .date("some-date")
+                .date(LocalDate.now())
                 .likes(100L)
                 .link("some-link")
                 .build();

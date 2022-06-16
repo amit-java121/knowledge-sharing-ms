@@ -1,5 +1,6 @@
 package com.knowledgesharing.ms.datatransfer;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -29,5 +31,6 @@ public class KnowledgeSharingDto {
     @NotBlank(message = "the field \"link\" is needed!")
     private String link;
 
-    private String date;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate date;
 }

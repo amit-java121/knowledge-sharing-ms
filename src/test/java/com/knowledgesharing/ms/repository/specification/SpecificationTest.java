@@ -12,11 +12,8 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.io.Serializable;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
-import static org.springframework.data.jpa.domain.Specification.not;
 
 class SpecificationTest {
 

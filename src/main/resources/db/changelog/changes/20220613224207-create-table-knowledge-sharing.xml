@@ -16,7 +16,7 @@
             <column name="author" type="VARCHAR">
                 <constraints nullable="false"/>
             </column>
-            <column name="date" type="TEXT">
+            <column name="date" type="DATE">
                 <constraints nullable="false"/>
             </column>
             <column name="likes" type="NUMERIC">

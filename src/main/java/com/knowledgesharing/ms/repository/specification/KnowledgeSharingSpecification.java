@@ -7,6 +7,8 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.criteria.Predicate;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +30,7 @@ public class KnowledgeSharingSpecification {
             if (!ObjectUtils.isEmpty(views)) {
                 predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("views"), views));
             }
+            predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("date"), LocalDate.now()));
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
     }
