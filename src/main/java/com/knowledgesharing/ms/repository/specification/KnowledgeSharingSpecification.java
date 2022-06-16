@@ -29,7 +29,7 @@ public class KnowledgeSharingSpecification {
             if (!ObjectUtils.isEmpty(views)) {
                 predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("views"), views));
             }
-            predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("date"), LocalDate.now()));
+//            predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("date"), LocalDate.now()));
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
     }

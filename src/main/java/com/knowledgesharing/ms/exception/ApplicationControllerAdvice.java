@@ -22,6 +22,15 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ApplicationControllerAdvice extends ResponseEntityExceptionHandler {
 
+    @ExceptionHandler({Throwable.class})
+    public ResponseEntity<ErrorResponse> handleException(Throwable ex) {
+        if (log.isErrorEnabled()) {
+            log.error("Unknown exception: " + ex.getMessage(), ex);
+        }
+        ErrorResponse errorResponse = new ErrorResponse("500", ex.getMessage());
+        return new ResponseEntity(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ErrorResponse> handleConstraintViolationException(ConstraintViolationException ex) {
         if (log.isErrorEnabled()) {
