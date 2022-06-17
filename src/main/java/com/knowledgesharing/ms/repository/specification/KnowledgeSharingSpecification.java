@@ -7,7 +7,6 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.criteria.Predicate;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
