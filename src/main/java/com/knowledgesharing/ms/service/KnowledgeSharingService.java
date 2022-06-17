@@ -28,7 +28,6 @@ public class KnowledgeSharingService {
     private final KnowledgeSharingSpecification knowledgeSharingSpecification;
 
     public KnowledgeSharingModelView fetchDetails(String author, String title, Long likes, Long views) {
-        int i  = 1/0;
         List<KnowledgeSharingDto> knowledgeSharingDtoList = knowledgeSharingMapper.convertToDto(knowledgeSharingRepository.findAll(
                 knowledgeSharingSpecification.getKnowledgeSharing(author, title, likes, views)));
         return KnowledgeSharingModelView.builder().knowledgeSharingDtoList(knowledgeSharingDtoList).build();

@@ -1,0 +1,169 @@
+{
+	"info": {
+		"_postman_id": "10451edf-313c-45d4-a806-f0da6b2a6677",
+		"name": "Knowledge-Sharing API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Delete Details",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/knowledge-sharing/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"knowledge-sharing",
+						"1"
+					],
+					"query": [
+						{
+							"key": "views",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "likes",
+							"value": "12000",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modify Details",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Climate Edited New\",\r\n    \"author\": \"Chandramouli\",\r\n    \"likes\": 12009,\r\n    \"views\": 500000,\r\n    \"date\" : \"2027-04-24\",\r\n    \"link\" : \"https://www.google.com\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/knowledge-sharing/24444444444444",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"knowledge-sharing",
+						"24444444444444"
+					],
+					"query": [
+						{
+							"key": "views",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "likes",
+							"value": "12000",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Insert Details",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Climate Edited New\",\r\n    \"author\": \"Chandramouli\",\r\n    \"likes\": 12009,\r\n    \"views\": 500000,\r\n    \"date\" : \"2027-04-24\",\r\n    \"link\" : \"https://www.google.com\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/knowledge-sharing",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"knowledge-sharing"
+					],
+					"query": [
+						{
+							"key": "views",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "likes",
+							"value": "12000",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch Details",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/v1/knowledge-sharing?title=Climate action needs new frontline leadership",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"knowledge-sharing"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "Climate action needs new frontline leadership"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

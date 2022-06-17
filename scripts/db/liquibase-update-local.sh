@@ -1,5 +1,5 @@
 #!/bin/bash
-export DB_URL="jdbc:postgresql://172.28.94.79:9001/db-knowledge-sharing"
+export DB_URL="jdbc:postgresql://localhost:9001/db-knowledge-sharing"
 export DB_USER="dbkwnsha"
 export DB_PASSWORD="dbkwnsha"
 
