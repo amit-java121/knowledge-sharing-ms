@@ -27,17 +27,39 @@ public class KnowledgeSharingService {
 
     private final KnowledgeSharingSpecification knowledgeSharingSpecification;
 
+    /**
+     * Get the details based on the search parameters that are being send as a request parameters to the service
+     *
+     * @param author
+     * @param title
+     * @param likes
+     * @param views
+     * @return
+     */
     public KnowledgeSharingModelView fetchDetails(String author, String title, Long likes, Long views) {
         List<KnowledgeSharingDto> knowledgeSharingDtoList = knowledgeSharingMapper.convertToDto(knowledgeSharingRepository.findAll(
                 knowledgeSharingSpecification.getKnowledgeSharing(author, title, likes, views)));
         return KnowledgeSharingModelView.builder().knowledgeSharingDtoList(knowledgeSharingDtoList).build();
     }
 
+    /**
+     * Inserts new knowledge sharing details that is received from the FE or External provider
+     *
+     * @param knowledgeSharingDto
+     * @return
+     */
     public Long insertDetails(KnowledgeSharingDto knowledgeSharingDto) {
         KnowledgeSharing knowledgeSharing = knowledgeSharingRepository.save(knowledgeSharingMapper.convertToEntityForInsert(knowledgeSharingDto));
         return knowledgeSharing.getId();
     }
 
+    /**
+     * Modifies the existing details on the DB based on the ID that is passed and the variables that are needs to be changed
+     *
+     * @param id
+     * @param knowledgeSharingDto
+     * @return
+     */
     public Long modifyDetails(Long id, KnowledgeSharingDto knowledgeSharingDto) {
         KnowledgeSharing knowledgeSharing = knowledgeSharingRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("The required ID your searching is not found on the DB " + id));
@@ -46,6 +68,13 @@ public class KnowledgeSharingService {
         return id;
     }
 
+    /**
+     * This method transforms the Entity object to a new Entity for perform the update
+     * @param knowledgeSharingDto
+     * @param id
+     * @param knowledgeSharing
+     * @return
+     */
     private KnowledgeSharing mergeWithNewValues(KnowledgeSharingDto knowledgeSharingDto, Long id, KnowledgeSharing knowledgeSharing) {
         knowledgeSharing.setId(id);
         if (StringUtils.hasLength(knowledgeSharingDto.getTitle())) {
@@ -71,6 +100,11 @@ public class KnowledgeSharingService {
         return knowledgeSharing;
     }
 
+    /**
+     * Deletes the element from the table by taking the ID as an input from the service
+     *
+     * @param id
+     */
     public void deleteDetails(Long id) {
         knowledgeSharingRepository.deleteById(id);
     }
