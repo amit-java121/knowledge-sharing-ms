@@ -31,9 +31,6 @@ class KnowledgeSharingServiceTest {
     private final KnowledgeSharingMapper knowledgeSharingMapper = mock(KnowledgeSharingMapper.class);
 
     private final KnowledgeSharingSpecification knowledgeSharingSpecification = mock(KnowledgeSharingSpecification.class);
-
-    private KnowledgeSharingService knowledgeSharingService;
-
     Specification<KnowledgeSharing> mockSpec;
     @Mock(extraInterfaces = Serializable.class)
     Root<KnowledgeSharing> root;
@@ -41,9 +38,9 @@ class KnowledgeSharingServiceTest {
     CriteriaQuery<?> query;
     @Mock(extraInterfaces = Serializable.class)
     CriteriaBuilder builder;
-
     @Mock(extraInterfaces = Serializable.class)
     Predicate predicate;
+    private KnowledgeSharingService knowledgeSharingService;
 
     @BeforeEach
     void setUp() {

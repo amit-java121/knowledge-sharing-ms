@@ -9,14 +9,13 @@ import org.springframework.mock.web.MockHttpServletResponse;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-
 import java.io.IOException;
 
 import static org.mockito.Mockito.*;
 
 public class RequestLoggingFilterTest {
 
-    MockHttpServletRequest request =  new MockHttpServletRequest("GET", "/foobar");
+    MockHttpServletRequest request = new MockHttpServletRequest("GET", "/foobar");
     MockHttpServletResponse response = new MockHttpServletResponse();
     FilterChain chain = mock(FilterChain.class);
     Logger logger = mock(Logger.class);
