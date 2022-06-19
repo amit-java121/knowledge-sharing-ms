@@ -88,7 +88,7 @@ class KnowledgeSharingControllerTest {
     void deleteDetails() {
         Long id = 1L;
         doNothing().when(knowledgeSharingService).deleteDetails(id);
-        knowledgeSharingController.deleteDetails(id);
+        knowledgeSharingController.deleteDetails(id, null);
         assertNotNull(id);
     }
 }

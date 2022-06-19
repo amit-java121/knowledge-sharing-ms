@@ -1,0 +1,14 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <changeSet author="chandra" id="20220619142138-populate-user-table-informations">
+        <loadData
+                tableName="user_access_details" relativeToChangelogFile="true" file="data/populate-users.csv">
+            <column header="user_id" name="user_id" type="STRING"/>
+            <column header="name" name="name" type="STRING"/>
+            <column header="role" name="role" type="STRING"/>
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

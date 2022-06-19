@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.validation.ConstraintViolationException;
@@ -28,6 +29,16 @@ public class ApplicationExceptionAdviceTest {
         assertNotNull(responseBody);
         assertThat(responseBody.getCode()).isEqualTo("404");
         assertThat(responseBody.getDescription()).isEqualTo("not found");
+    }
+
+    @Test
+    void shouldAccessDeniedException() {
+        AccessDeniedException exception = new AccessDeniedException("access denied");
+        ResponseEntity<ErrorResponse> errorResponse = applicationControllerAdvice.accessDeniedException(exception);
+        ErrorResponse responseBody = errorResponse.getBody();
+        assertNotNull(responseBody);
+        assertThat(responseBody.getCode()).isEqualTo("403");
+        assertThat(responseBody.getDescription()).isEqualTo("access denied");
     }
 
     @Test

@@ -65,23 +65,15 @@ let's start the microservice project, so by default it will start on the port lo
 
 > Access Swagger API page on the URL **http://localhost:8080/swagger-ui.html**
 
+## Role Based Authentication
+
+> username passed a header parameter with header name: (as an example - here)<br />
+>  UUID values created from the Java library (java.util.UUID)<br />
+> "x-user-id" --> a207644e-d040-4448-901f-16fd6374fb0c (CUSTOMER)<br />
+> "x-user-id" --> 31400124-6acd-4fcc-88be-f2a24c769ef0 (ADMIN)<br />
+> To call the service from the POSTMAN (Updated the postman collection too with the required UUID mentioned above)
+
 ## Enhancements
-
-> - **Role Based Security**<br />
-    Here having the list of users and its specific roles that they are enabled to perform the set of operations. <br />
-    > **Required:** Table User, every-request will go through a @PreAuthorize method that will communicate with the user
-    table with the UUID coming from the JWT token or specific header value.
-> - Having UUID related to the each user as unique identifier number, with the corresponding role that user can be
-    associated with.
-
-### Table Definition
-                                    
-                                    | ID  | NAME                | ROLE     |
-                                    |-----|---------------------|----------|
-                                    | ID1 | CUSTOMER-USER-NAME1 | CUSTOMER |
-                                    | ID2 | CUSTOMER-USER-NAME2 | CUSTOMER |
-                                    | ID3 | ADMIN-USER-NAME     | ADMIN    |
-                                    |-----|---------------------|----------|
 
 > - **Loading the File through streams** <br />For loading a large set of files into the DB, like initial loading or
     future loading of massive data, we can run the files based on the streaming. where the microservice will be

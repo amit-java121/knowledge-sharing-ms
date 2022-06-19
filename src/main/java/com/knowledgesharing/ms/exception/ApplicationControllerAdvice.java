@@ -5,6 +5,7 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -29,6 +30,15 @@ public class ApplicationControllerAdvice extends ResponseEntityExceptionHandler 
         }
         ErrorResponse errorResponse = new ErrorResponse("500", ex.getMessage());
         return new ResponseEntity(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler({AccessDeniedException.class})
+    public ResponseEntity<ErrorResponse> accessDeniedException(AccessDeniedException ex) {
+        if (log.isErrorEnabled()) {
+            log.error("Unknown exception: " + ex.getMessage(), ex);
+        }
+        ErrorResponse errorResponse = new ErrorResponse("403", ex.getMessage());
+        return new ResponseEntity(errorResponse, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)

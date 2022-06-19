@@ -7,4 +7,6 @@
 
     <include relativeToChangelogFile='true' file='changes/20220613224207-create-table-knowledge-sharing.xml'/>
     <include relativeToChangelogFile='true' file='changes/20220613233149-populate-table-knowledge-sharing.xml'/>
+    <include relativeToChangelogFile='true' file='changes/20220619124554-create-table-user-profile.xml'/>
+    <include relativeToChangelogFile='true' file='changes/20220619142138-populate-user-table-informations.xml'/>
 </databaseChangeLog>

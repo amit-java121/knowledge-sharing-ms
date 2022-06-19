@@ -33,9 +33,6 @@ public class KnowSharingControllerApiTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @Autowired
-    private MockMvc mockMvc;
-
     private RequestSpecification request;
     private Response response;
 
@@ -64,7 +61,7 @@ public class KnowSharingControllerApiTest {
     @TestInstance(PER_CLASS)
     class FetchDetails {
         @Test
-        void shouldFetchDetailsAPI() throws Exception {
+        void shouldFetchDetailsAPI() {
             String author = "Climate action needs new frontline leadership";
             String title = "Ozawa Bineshi Albert";
             String url = "http://localhost:" + randomServerPort + "/v1/knowledge-sharing";
@@ -72,7 +69,7 @@ public class KnowSharingControllerApiTest {
             url += "&title=" + title;
             url += "&likes=12000";
             url += "&views=404000";
-            response = given().when().get(url);
+            response = given().header("x-user-id", "a207644e-d040-4448-901f-16fd6374fb0c").when().get(url);
             response.then().statusCode(200);
         }
     }
@@ -95,7 +92,7 @@ public class KnowSharingControllerApiTest {
 
             String requestBody = objectMapper.writeValueAsString(knowledgeSharingDto);
             request = given().contentType(ContentType.JSON);
-            response = request.when().body(requestBody).post(url);
+            response = request.when().header("x-user-id", "31400124-6acd-4fcc-88be-f2a24c769ef0").body(requestBody).post(url);
             response.then().statusCode(201);
 
         }
@@ -117,7 +114,7 @@ public class KnowSharingControllerApiTest {
                     .build();
 
             String requestBody = objectMapper.writeValueAsString(knowledgeSharingDto);
-            request = given().contentType(ContentType.JSON);
+            request = given().header("x-user-id", "a207644e-d040-4448-901f-16fd6374fb0c").contentType(ContentType.JSON);
             response = request.when().body(requestBody).put(url);
             response.then().statusCode(200);
 
@@ -128,10 +125,17 @@ public class KnowSharingControllerApiTest {
     @TestInstance(PER_CLASS)
     class deleteDetails {
         @Test
-        void shouldModifyRecords() throws Exception {
+        void shouldModifyRecords() {
             String url = "http://localhost:" + randomServerPort + "/v1/knowledge-sharing/3";
-            response = given().when().delete(url);
+            response = given().header("x-user-id", "31400124-6acd-4fcc-88be-f2a24c769ef0").when().delete(url);
             response.then().statusCode(204);
+        }
+
+        @Test
+        void shouldThrowExceptionForbiddenError() {
+            String url = "http://localhost:" + randomServerPort + "/v1/knowledge-sharing/4";
+            response = given().header("x-user-id", "a207644e-d040-4448-901f-16fd6374fb0c").when().delete(url);
+            response.then().statusCode(403);
         }
     }
 
