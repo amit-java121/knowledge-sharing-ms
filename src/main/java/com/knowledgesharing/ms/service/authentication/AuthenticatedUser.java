@@ -11,8 +11,8 @@ import java.util.Objects;
 
 public class AuthenticatedUser implements UserDetails {
 
-    private UserAccessDetails userAccessDetails;
     private final Collection<GrantedAuthority> authorities;
+    private UserAccessDetails userAccessDetails;
 
     public AuthenticatedUser(UserAccessDetails userAccessDetails) {
         if (Objects.isNull(userAccessDetails)) {
@@ -52,7 +52,7 @@ public class AuthenticatedUser implements UserDetails {
     }
 
     private Collection<GrantedAuthority> initAuthorities(UserAccessDetails user) {
-        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority("ROLE_" +user.getRole());
+        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority("ROLE_" + user.getRole());
         return List.of(simpleGrantedAuthority);
     }
 }

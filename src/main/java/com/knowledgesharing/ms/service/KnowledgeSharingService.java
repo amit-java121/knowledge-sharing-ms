@@ -70,6 +70,7 @@ public class KnowledgeSharingService {
 
     /**
      * This method transforms the Entity object to a new Entity for perform the update
+     *
      * @param knowledgeSharingDto
      * @param id
      * @param knowledgeSharing
